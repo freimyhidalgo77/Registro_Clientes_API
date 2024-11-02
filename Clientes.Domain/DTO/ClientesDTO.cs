@@ -15,7 +15,7 @@ namespace Clientes.Domain.DTO
 
         public  string? NumeroDeWhatsapp {  get; set; }
 
-        public DateTime Fecha { get; set; } = DateTime.Now;
+        
 
 
     }
