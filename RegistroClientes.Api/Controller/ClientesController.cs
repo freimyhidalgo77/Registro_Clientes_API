@@ -7,96 +7,61 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Clientes.Data.Context;
 using Clientes.Data.Models;
+using Clientes.Abstraccion;
+using Clientes.Domain.DTO;
 
 namespace RegistroClientes.Api.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class ClientesController(IClientesService clientesService) : ControllerBase
     {
         private readonly ClientesContext _context;
 
-        public ClientesController(ClientesContext context)
-        {
-            _context = context;
-        }
-
         // GET: api/Clientes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
+        public async Task<ActionResult<IEnumerable<ClientesDTO>>> GetClientes()
         {
-            return await _context.Clientes.ToListAsync();
+            return await clientesService.Listar(t =>true);
         }
 
         // GET: api/Clientes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCliente(int id)
+        public async Task<ActionResult<ClientesDTO>> GetCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-
-            if (cliente == null)
-            {
-                return NotFound();
-            }
-
-            return cliente;
+            return await clientesService.Buscar(id);
         }
 
         // PUT: api/Clientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<IActionResult> PutCliente(int id, ClientesDTO clientesDTO)
         {
-            if (id != cliente.ClienteId)
+            if (id != clientesDTO.ClienteID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClienteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            // Actualizar el cliente
+            await clientesService.Guardar(clientesDTO);
             return NoContent();
         }
 
         // POST: api/Clientes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<Cliente>> PostCliente(ClientesDTO clientesDTO)
         {
-            _context.Clientes.Add(cliente);
-            await _context.SaveChangesAsync();
+            await clientesService.Guardar(clientesDTO);
+            return CreatedAtAction("GetClientes", new { id = clientesDTO.ClienteID }, clientesDTO );
 
-            return CreatedAtAction("GetCliente", new { id = cliente.ClienteId }, cliente);
         }
 
         // DELETE: api/Clientes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null)
-            {
-                return NotFound();
-            }
-
-            _context.Clientes.Remove(cliente);
-            await _context.SaveChangesAsync();
-
+            await clientesService.Eliminar(id);
             return NoContent();
         }
 
