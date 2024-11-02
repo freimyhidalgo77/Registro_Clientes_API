@@ -23,15 +23,14 @@ namespace Clientes.Data.Models
         [Required(ErrorMessage = "Campo numero de whatsapp obligatorio")]
         public string? NumeroWhatsapp { get; set; }
 
-        public DateTime Fecha { get; set; } = DateTime.Now;
 
+       }
     }
-    }
 
 
 
 
-
+ 
 
 
 
