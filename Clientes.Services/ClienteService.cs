@@ -29,7 +29,10 @@ namespace Clientes.Services
             {
                 ClienteId = clientesDTO.ClienteID,
                 NombreCliente = clientesDTO.NombreCliente,
-                NumeroWhatsapp = clientesDTO.NumeroDeWhatsapp
+                NumeroWhatsapp = clientesDTO.NumeroDeWhatsapp,
+                
+
+
             };
             context.Clientes.Add(client);
             var guardar = await context.SaveChangesAsync() > 0;
@@ -44,7 +47,11 @@ namespace Clientes.Services
             {
                 ClienteId = clientesDTO.ClienteID,
                 NombreCliente = clientesDTO.NombreCliente,
-                NumeroWhatsapp = clientesDTO.NumeroDeWhatsapp
+                NumeroWhatsapp = clientesDTO.NumeroDeWhatsapp,
+             
+               
+
+
 
             };
             context.Update(client);
@@ -81,7 +88,9 @@ namespace Clientes.Services
                 {
                     ClienteID = c.ClienteId,
                     NombreCliente = c.NombreCliente,
-                    NumeroDeWhatsapp = c.NumeroWhatsapp
+                    NumeroDeWhatsapp = c.NumeroWhatsapp,
+                   
+                   
 
                 }).FirstOrDefaultAsync();
 
@@ -96,7 +105,9 @@ namespace Clientes.Services
                 {
                     ClienteID = c.ClienteId,
                     NombreCliente = c.NombreCliente,
-                    NumeroDeWhatsapp =c.NumeroWhatsapp
+                    NumeroDeWhatsapp =c.NumeroWhatsapp,
+                   
+                    
                 })
                 .Where(criterio)
                 .ToListAsync();
