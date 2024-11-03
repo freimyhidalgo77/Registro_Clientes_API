@@ -15,7 +15,9 @@ namespace Clientes.Abstraccion
         Task<bool> Eliminar(int clienteId);
         Task<ClientesDTO> Buscar(int id);
         Task<List<ClientesDTO>> Listar(Expression<Func<ClientesDTO, bool>> criterio);
-        Task<bool> ExistePrioridad(int id, string nombre, string whatsapp);
+
+        Task<bool> ClienteExiste(int id, string nombres);
+
 
     }
 }
