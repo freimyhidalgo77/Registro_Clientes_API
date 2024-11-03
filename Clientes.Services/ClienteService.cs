@@ -48,11 +48,7 @@ namespace Clientes.Services
                 ClienteId = clientesDTO.ClienteID,
                 NombreCliente = clientesDTO.NombreCliente,
                 NumeroWhatsapp = clientesDTO.NumeroDeWhatsapp,
-             
-               
-
-
-
+            
             };
             context.Update(client);
             var modificado = await context.SaveChangesAsync() > 0;
@@ -113,15 +109,12 @@ namespace Clientes.Services
                 .ToListAsync();
         }
 
-        public async Task<bool> ExistePrioridad(int id, string Nombre, string Whatsapp)
+        public async Task<bool> ClienteExiste(int id, string nombres)
         {
-            await using var context = await DbFactory.CreateDbContextAsync();
-            return await context.Clientes
-                .AnyAsync(e => e.ClienteId != id
-                && e.NombreCliente == Nombre
-                || e.NumeroWhatsapp.ToLower().Equals(Whatsapp.ToLower()));
+            await using var contexto = await DbFactory.CreateDbContextAsync();
+            return await contexto.Clientes
+                .AnyAsync(e => e.ClienteId != id && e.NombreCliente.ToLower().Equals(nombres.ToLower()));
         }
-
 
 
 
