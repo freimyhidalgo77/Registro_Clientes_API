@@ -35,15 +35,15 @@ namespace RegistroClientes.Api.Controller
         // PUT: api/Clientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, ClientesDTO clientesDTO)
+        public async Task<IActionResult> PutCliente(int id, ClientesDTO clientesDto)
         {
-            if (id != clientesDTO.ClienteID)
+            if (id != clientesDto.ClienteID)
             {
                 return BadRequest();
             }
 
             // Actualizar el cliente
-            await clientesService.Guardar(clientesDTO);
+            await clientesService.Guardar(clientesDto);
             return NoContent();
         }
 
