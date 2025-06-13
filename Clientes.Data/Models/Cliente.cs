@@ -1,4 +1,4 @@
-using System;More actions
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,7 +24,6 @@ namespace Clientes.Data.Models
         public string? NumeroWhatsapp { get; set; }
 
      
-
 
        }
     }
